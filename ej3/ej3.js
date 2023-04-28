@@ -1,0 +1,41 @@
+const express=require('express')
+const app=express()
+
+
+const productos={
+    description: 'Productos',
+    items: [
+      { id: 1, nombre: 'Taza de Harry Potter' , precio: 300},
+      { id: 2, nombre: 'FIFA 22 PS5' , precio: 1000},
+      {  id: 3, nombre: 'Figura Goku Super Saiyan' , precio: 100},
+      {  id: 4,  nombre: 'Zelda Breath of the Wild' , precio: 200},
+      {  id: 5,  nombre: 'Skin Valorant' , precio: 120},
+      {  id: 6, nombre: 'Taza de Star Wars' , precio: 220}
+    ]
+  }
+
+
+app.get('/product',(req,res)=>{
+    res.send(productos)
+})
+app.use(express.json())
+app.post('/product/new_prod',(req,res)=>{
+    const new_product={
+        id: productos.length+1,
+        nombre: req.body.nombre,
+        precio: req.body.precio,
+    }
+    if(req.body.nombre || req.body.precio){
+        res.status(400).send({message:'Field require'})
+    }else{
+
+    
+    }
+    
+    productos.push(new_product)
+    res.status(201).send({results:productos})
+})
+
+app.listen("3000",()=>{
+    console.log('Servidor levantado en el puerto 3000');
+})
